@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+# Generated folder
+bin/*
+bin-int/*
