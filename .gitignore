@@ -34,3 +34,4 @@
 # Generated folder
 bin/*
 bin-int/*
+.vs/*
