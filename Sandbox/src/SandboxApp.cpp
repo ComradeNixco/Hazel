@@ -12,12 +12,6 @@ private:
 public:
 	SandboxApp() = default;
 	~SandboxApp() = default;
-
-	void Run() override
-	{
-		std::cout << "It runs!" << std::endl;
-		Super::Run();
-	}
 };
 
 Hazel::Application* Hazel::CreateApplication()
