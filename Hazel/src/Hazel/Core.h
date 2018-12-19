@@ -9,3 +9,7 @@
 #else
 # error Hazel Engine only supports windows for now!
 #endif
+
+#define BIT(x) (1 << x)
+
+using uint = unsigned int;

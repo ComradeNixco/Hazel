@@ -7,13 +7,9 @@
 extern Hazel::Application* Hazel::CreateApplication();
 
 #ifdef HZ_PLATFORM_WINDOWS
-int main(int argc, char** argv)
-{
+int main(int argc, char** argv) {
 	Hazel::Log::Init();
-	Hazel::Log::GetCoreLogger()->warn("Initialization done!");
-	Hazel::Log::GetClientLogger()->info("WoW");
-	HZ_CORE_ERROR("An error");
-	HZ_TRACE("A trace");
+	Hazel::Log::GetCoreLogger()->trace("Initialization done!");
 	auto* app = Hazel::CreateApplication();
 	app->Run();
 	delete app;
