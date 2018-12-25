@@ -1,6 +1,7 @@
 -- premake4.lua
 workspace "Hazel"
-    architecture "x64"
+	architecture "x64"
+	startproject "Sandbox"
 
     configurations
     {
@@ -9,15 +10,19 @@ workspace "Hazel"
         "Dist"
     }
 
-outputDir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+includeDir = {}
+includeDir["GLFW"] = "Hazel/vendor/GLFW/include"
+
+include "Hazel/vendor/GLFW"
 
 project "Hazel"
 	location "Hazel"
 	kind "SharedLib"
 	language "C++"
 
-	targetdir ("bin/" .. outputDir .. "/%{prj.name}")
-	objdir ("bin-int/" .. outputDir .. "/%{prj.name}")
+	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
 	pchheader "hzpch.h"
 	pchsource "Hazel/src/hzpch.cpp"
@@ -32,6 +37,13 @@ project "Hazel"
 	{
 		"%{prj.name}/src",
 		"%{prj.name}/vendor/spdlog/include",
+		"%{includeDir.GLFW}"
+	}
+
+	links
+	{
+		"GLFW",
+		"opengl32.lib"
 	}
 
 	filter "action:vs*"
@@ -53,11 +65,15 @@ project "Hazel"
 
 		postbuildcommands
 		{
-			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputDir .. "/Sandbox")
+			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
 		}
 
 	filter "configurations:Debug"
-		defines "HZ_DEBUG"
+		defines
+		{
+			"HZ_DEBUG",
+			"HZ_ENABLE_ASSERTS"
+		}
 		symbols "On"
 
 	filter "configurations:Release"
@@ -73,8 +89,8 @@ project "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
 
-	targetdir ("bin/" .. outputDir .. "/%{prj.name}")
-	objdir ("bin-int/" .. outputDir .. "/%{prj.name}")
+	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
 	files
 	{

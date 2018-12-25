@@ -17,3 +17,5 @@
 #ifdef HZ_PLATFORM_WINDOWS
 # include <Windows.h>
 #endif
+
+#include "Hazel/Log.h"
